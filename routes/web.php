@@ -15,6 +15,10 @@ Route::get('/favorites', function () {
     return view('favorites.index');
 })->name("favorites.index");
 
+Route::get('/my-properties', function () {
+    return view('my-properties.index');
+})->name("my-properties.index");
+
 Route::middleware('guest')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
