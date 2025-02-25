@@ -7,6 +7,10 @@ Route::get('/', function () {
     return view('home');
 })->name("home");
 
+Route::get('/properties', function () {
+    return view('properties.index');
+})->name("properties.index");
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
