@@ -15,6 +15,10 @@ Route::get('/properties/create', function () {
     return view('properties.create');
 })->name("properties.create");
 
+Route::get('/properties/edit', function () {
+    return view('properties.edit');
+})->name("properties.edit");
+
 Route::get('/favorites', function () {
     return view('favorites.index');
 })->name("favorites.index");
