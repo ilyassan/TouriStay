@@ -27,6 +27,10 @@ Route::get('/my-properties', function () {
     return view('my-properties.index');
 })->name("my-properties.index");
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name("dashboard");
+
 Route::middleware('guest')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
