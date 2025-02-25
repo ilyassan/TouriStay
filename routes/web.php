@@ -11,6 +11,10 @@ Route::get('/properties', function () {
     return view('properties.index');
 })->name("properties.index");
 
+Route::get('/favorites', function () {
+    return view('favorites.index');
+})->name("favorites.index");
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
