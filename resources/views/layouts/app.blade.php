@@ -17,7 +17,7 @@
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
                             <a href="{{ route('home') }}" class="flex-shrink-0 flex items-center">
-                                <span class="ml-2 text-xl font-semibold text-[#FF5A5F]">Ramadan 2025</span>
+                                <span class="ml-2 text-xl font-semibold text-[#FF5A5F]">TouriStay</span>
                             </a>
                         </div>
                         <div class="hidden md:flex md:items-center md:space-x-6">
@@ -69,7 +69,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-10">
                     <div>
                         <h4 class="text-lg font-semibold text-gray-900 mb-4">About Us</h4>
-                        <p class="text-gray-600">Our platform brings the community together to share inspiring experiences and recipes during Ramadan 2025.</p>
+                        <p class="text-gray-600">Our platform brings the community together to share inspiring experiences and recipes during TouriStay.</p>
                         <div class="flex mt-4 space-x-4">
                             <a href="#" class="text-gray-600 hover:text-[#FF5A5F] transition-colors duration-200">
                                 <i class="fab fa-facebook-f"></i>
@@ -107,7 +107,7 @@
                         <ul class="space-y-2 text-gray-600">
                             <li class="flex items-start">
                                 <i class="fas fa-envelope mt-1 mr-3"></i>
-                                <span>contact@ramadan2025.com</span>
+                                <span>contact@TouriStay.com</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-phone-alt mt-1 mr-3"></i>
@@ -127,7 +127,7 @@
                 </div>
                 <div class="border-t border-gray-200 pt-6 mt-6">
                     <div class="flex flex-col md:flex-row justify-between items-center">
-                        <p class="text-gray-600 text-sm">© 2025 Ramadan Platform. All rights reserved.</p>
+                        <p class="text-gray-600 text-sm">© 2025 TouriStay Platform. All rights reserved.</p>
                         <div class="flex space-x-4 mt-4 md:mt-0">
                             <a href="#" class="text-gray-600 hover:text-[#FF5A5F] text-sm transition-colors duration-200">Privacy Policy</a>
                             <a href="#" class="text-gray-600 hover:text-[#FF5A5F] text-sm transition-colors duration-200">Terms of Use</a>
