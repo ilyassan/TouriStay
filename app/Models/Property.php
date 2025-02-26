@@ -27,6 +27,11 @@ class Property extends Model
         "type_id",
     ];
 
+    public function getPrimaryKey()
+    {
+        return $this->id;
+    }
+
     public function getTitle()
     {
         return $this->title;
@@ -37,6 +42,11 @@ class Property extends Model
         return $this->description;
     }
 
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
     public function getPrice()
     {
         return $this->price;
@@ -44,7 +54,12 @@ class Property extends Model
 
     public function getImage()
     {
-        return $this->image ?? "https://placehold.co/600x400";
+        return $this->image ? asset("storage/". $this->image) : "https://placehold.co/600x400";
+    }
+
+    public function getImageName()
+    {
+        return $this->image;
     }
 
     public function getBedrooms()
@@ -65,6 +80,21 @@ class Property extends Model
     public function getAvailableToDate()
     {
         return $this->available_to;
+    }
+
+    public function getOwnerId()
+    {
+        return $this->user_id;
+    }
+
+    public function getTypeId()
+    {
+        return $this->type_id;
+    }
+
+    public function getCityId()
+    {
+        return $this->city_id;
     }
 
     

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePropertyRequest;
+use App\Http\Requests\UpdatePropertyRequest;
 use App\Models\City;
 use App\Models\Property;
 use App\Models\Type;
@@ -13,7 +15,7 @@ class PropertyController extends Controller
     
     public function index(Request $request)
     {
-        $keyword = $request->has("keyword") ? "%" . $request->get("keyword") . "%" : "";
+        $keyword = $request->has("keyword") ? "%" . $request->get("keyword") . "%" : "%";
         $itemsToShow = $request->get("items") ?? 3;
         
         $properties = Property::with("city")
@@ -36,29 +38,53 @@ class PropertyController extends Controller
         return view('properties.create', compact("types", "cities"));
     }
 
-    public function store(Request $request)
+    public function store(StorePropertyRequest $request)
     {
-        $data = $request->validate([
-            "title" => "required|string|max:255",
-            "type_id" => "required|exists:types,id",
-            "bedrooms" => "required|numeric",
-            "bathrooms" => "required|numeric",
-            "city_id" => "required|exists:cities,id",
-            "address" => "required|string|max:255",
-            "description" => "required|string",
-            "image" => "required|image|mimes:jpeg,png,jpg,gif|max:2048",
-            "price" => "required|numeric",
-            "available_from" => "required|date",
-            "available_to" => "required|date|after_or_equal:available_from",
-        ]);
+        $data = $request->validated();
 
         // Store the image
         $data["image"] = $request->file('image')->store('images', 'public');
         $data["user_id"] = Auth::id();
         
-        // Create the experience
+        // Create the property
         Property::create($data);
         
         return back()->with("success", "Your property has been published successfully.");
+    }
+
+    public function edit(Property $property)
+    {
+        if (Auth::id() != $property->getOwnerId()) {
+            return redirect()->route("home");
+        }
+
+        $types = Type::all();
+        $cities = City::all();
+
+        return view('properties.edit', compact("types", "cities", "property"));
+    }
+    
+    public function update(UpdatePropertyRequest $request, Property $property)
+    {
+        $data = $request->validated();
+
+        if (Auth::id() != $property->getOwnerId()) {
+            return redirect()->route("home");
+        }
+
+        // Delete the old image
+        if ($request->hasFile('image')) {
+            if ($property->getImageName()) {
+                unlink(storage_path("app/public/" . $property->getImageName()));
+            }
+            $data["image"] = $request->file('image')->store('images', 'public');
+        }
+
+        $data["user_id"] = Auth::id();
+        
+        // Update the property
+        $property->update($data);
+        
+        return back()->with("success", "Your property has been updated successfully.");
     }
 }
