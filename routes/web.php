@@ -14,6 +14,7 @@ Route::post('/properties/store', [PropertyController::class, 'store'])->name("pr
 
 Route::get('/properties/edit/{property}', [PropertyController::class, 'edit'])->name("properties.edit")->middleware("auth");
 Route::put('/properties/update/{property}', [PropertyController::class, 'update'])->name("properties.update")->middleware("auth");
+Route::delete('/properties/destroy/{property}', [PropertyController::class, 'destroy'])->name("properties.destroy")->middleware("auth");
 
 Route::get('/favorites', function () {
     return view('favorites.index');
