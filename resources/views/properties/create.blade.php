@@ -1,6 +1,10 @@
 <x-app-layout>
     <x-slot:title> Add New Property </x-slot>
 
+    @if ($errors->any())
+        <x-slot:error>{{ $errors->first() }}</x-slot> 
+    @endif
+
     <!-- Add Property Form Section -->
     <section class="py-12 bg-white">
         <div class="container mx-auto px-4 md:px-6 lg:px-8">
@@ -37,24 +41,24 @@
 
                 <!-- Form Content -->
                 <div class="p-6 md:p-8">
-                    <form id="addPropertyForm" class="space-y-8">
+                    <form method="POST" action="{{ route('properties.store') }}" enctype="multipart/form-data" class="space-y-8">
+                        @csrf
+                        @method("POST")
                         <!-- Property Title -->
                         <div>
                             <label for="propertyTitle" class="block text-sm font-medium text-gray-700 mb-1">Property Title</label>
-                            <input autocomplete="off" type="text" id="propertyTitle" name="propertyTitle" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]" placeholder="e.g. Luxury Apartment with Ocean View">
+                            <input autocomplete="off" type="text" name="title" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]" placeholder="e.g. Luxury Apartment with Ocean View">
                         </div>
 
                         <!-- Property Type & Bedrooms -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label for="propertyType" class="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
-                                <select id="propertyType" name="propertyType" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]">
+                                <select id="propertyType" name="type_id" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]">
                                     <option value="">Select property type</option>
-                                    <option value="apartment">Apartment</option>
-                                    <option value="house">House</option>
-                                    <option value="villa">Villa</option>
-                                    <option value="condo">Condo</option>
-                                    <option value="cabin">Cabin</option>
+                                    @foreach ($types as $type)
+                                        <option value="{{ $type->getPrimaryKey() }}">{{ $type->getName() }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div>
@@ -64,7 +68,7 @@
                                     <option value="2">2 Bedrooms</option>
                                     <option value="3">3 Bedrooms</option>
                                     <option value="4">4 Bedrooms</option>
-                                    <option value="5">5+ Bedrooms</option>
+                                    <option value="5">5 Bedrooms</option>
                                 </select>
                             </div>
                         </div>
@@ -76,7 +80,7 @@
                                 <option value="1">1 Bathroom</option>
                                 <option value="2">2 Bathrooms</option>
                                 <option value="3">3 Bathrooms</option>
-                                <option value="4">4+ Bathrooms</option>
+                                <option value="4">4 Bathrooms</option>
                             </select>
                         </div>
 
@@ -93,14 +97,11 @@
                                 </div>
                                 <div>
                                     <label for="city" class="block text-sm font-medium text-gray-500 mb-1">City*</label>
-                                    <select id="city" name="city" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]">
+                                    <select id="city" name="city_id" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]">
                                         <option value="">Select city</option>
-                                        <option value="casablanca">Casablanca</option>
-                                        <option value="rabat">Rabat</option>
-                                        <option value="marrakech">Marrakech</option>
-                                        <option value="fes">Fes</option>
-                                        <option value="tangier">Tangier</option>
-                                        <option value="agadir">Agadir</option>
+                                        @foreach ($cities as $city)
+                                            <option value="{{ $city->getPrimaryKey() }}">{{ $city->getName() }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -170,9 +171,9 @@
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                 <div>
-                                    <label for="startDate" class="block text-sm font-medium text-gray-500 mb-1">Start Date*</label>
+                                    <label for="available_from" class="block text-sm font-medium text-gray-500 mb-1">Start Date*</label>
                                     <div class="relative">
-                                        <input type="text" id="startDate" name="startDate" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]" placeholder="Select start date">
+                                        <input type="text" id="available_from" name="available_from" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]" placeholder="Select start date">
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                             <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
@@ -181,9 +182,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="endDate" class="block text-sm font-medium text-gray-500 mb-1">End Date*</label>
+                                    <label for="available_to" class="block text-sm font-medium text-gray-500 mb-1">End Date*</label>
                                     <div class="relative">
-                                        <input type="text" id="endDate" name="endDate" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]" placeholder="Select end date">
+                                        <input type="text" id="available_to" name="available_to" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]" placeholder="Select end date">
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                             <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
@@ -199,7 +200,7 @@
                             <button type="button" class="bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-3 rounded-lg text-sm font-semibold transition duration-300 ease-in-out inline-block">
                                 Back
                             </button>
-                            <button type="button" class="bg-[#FF5A5F] text-white hover:bg-[#E94E53] px-6 py-3 rounded-lg text-sm font-semibold transition duration-300 ease-in-out inline-block" id="goToStep2">
+                            <button type="submit" class="bg-[#FF5A5F] text-white hover:bg-[#E94E53] px-6 py-3 rounded-lg text-sm font-semibold transition duration-300 ease-in-out inline-block" id="goToStep2">
                                 Publish Property
                             </button>
                         </div>
@@ -307,23 +308,18 @@
             });
             
             // Initialize Flatpickr date pickers for separate start and end dates
-            flatpickr("#startDate", {
+            flatpickr("#available_from", {
                 dateFormat: "Y-m-d",
                 minDate: "today",
                 onChange: function(selectedDates, dateStr) {
                     // Set the minimum date of the end date picker to the selected start date
-                    endDatePicker.set("minDate", dateStr);
+                    available_toPicker.set("minDate", dateStr);
                 }
             });
             
-            const endDatePicker = flatpickr("#endDate", {
+            const available_toPicker = flatpickr("#available_to", {
                 dateFormat: "Y-m-d",
                 minDate: "today"
-            });
-            
-            // Simulate the form submission
-            document.getElementById('goToStep2').addEventListener('click', function() {
-                alert('Form validation would occur here, and then proceed to step 2: Photos & Amenities');
             });
         });
     </script>

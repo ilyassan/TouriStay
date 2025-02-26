@@ -18,9 +18,11 @@ return new class extends Migration
             $table->integer("price");
             $table->integer("bedrooms");
             $table->integer("bathrooms");
+            $table->string("address");
             $table->string("image")->nullable();
             $table->foreignId("city_id")->constrained("cities")->cascadeOnDelete();
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
+            $table->foreignId("type_id")->constrained("types")->cascadeOnDelete();
             $table->date("available_from");
             $table->date("available_to");
             $table->timestamps();

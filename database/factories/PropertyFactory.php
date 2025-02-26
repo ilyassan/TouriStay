@@ -22,9 +22,11 @@ class PropertyFactory extends Factory
             "image" => null,
             "bedrooms" => fake()->numberBetween(1, 6),
             "bathrooms" => fake()->numberBetween(1, 3),
+            "address" => fake()->sentence(1),
             "available_from" => $availableFrom,
             "available_to" => $availableTo,
             "city_id" => null, // Set in seeder
+            "type_id" => null, // Set in seeder
         ];
     }
 }
