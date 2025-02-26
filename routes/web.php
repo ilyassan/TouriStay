@@ -2,13 +2,12 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name("home");
 
-Route::get('/properties', function () {
-    return view('properties.index');
-})->name("properties.index");
+Route::get('/properties', [PropertyController::class, 'index'])->name("properties.index");
 
 Route::get('/properties/create', function () {
     return view('properties.create');
