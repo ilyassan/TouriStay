@@ -97,11 +97,25 @@ class Property extends Model
         return $this->city_id;
     }
 
-    
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
 
+    public function isActive()
+    {
+        return $this->available_from <= now() && $this->available_to >= now();
+    }
+
+    
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(Type::class);
     }
 
     public function owner(): BelongsTo

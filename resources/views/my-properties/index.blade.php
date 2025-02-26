@@ -35,7 +35,7 @@
                         </div>
                         <div>
                             <p class="text-gray-500 text-sm">Total Properties</p>
-                            <p class="text-2xl font-bold">5</p>
+                            <p class="text-2xl font-bold">{{ $propertiesCount }}</p>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         </div>
                         <div>
                             <p class="text-gray-500 text-sm">Active Listings</p>
-                            <p class="text-2xl font-bold">4</p>
+                            <p class="text-2xl font-bold">{{ $activePropertiesCount }}</p>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                         </div>
                         <div>
                             <p class="text-gray-500 text-sm">Total Earnings</p>
-                            <p class="text-2xl font-bold">$8,420</p>
+                            <p class="text-2xl font-bold">8,420 DH</p>
                         </div>
                     </div>
                 </div>
@@ -90,273 +90,58 @@
             <!-- Filters and Controls -->
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <h2 class="text-2xl font-semibold mb-4 md:mb-0">Your Properties</h2>
-                
-                <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-                    <div class="relative">
-                        <select class="appearance-none bg-white border border-gray-300 rounded-lg py-2 px-4 pr-8 leading-tight focus:ring-[#FF5A5F] focus:border-[#FF5A5F] w-full md:w-auto">
-                            <option>All Properties</option>
-                            <option>Active</option>
-                            <option>Pending Review</option>
-                            <option>Inactive</option>
-                        </select>
-                    </div>
-                    
-                    <div class="relative">
-                        <select class="appearance-none bg-white border border-gray-300 rounded-lg py-2 px-4 pr-8 leading-tight focus:ring-[#FF5A5F] focus:border-[#FF5A5F] w-full md:w-auto">
-                            <option>All Locations</option>
-                            <option>Morocco</option>
-                            <option>Spain</option>
-                            <option>Portugal</option>
-                        </select>
-                    </div>
-                    
-                    <div class="relative flex-grow md:max-w-xs">
-                        <input type="text" placeholder="Search your properties" class="w-full border border-gray-300 rounded-lg py-2 px-4 focus:ring-[#FF5A5F] focus:border-[#FF5A5F]">
-                    </div>
-                </div>
             </div>
 
             <!-- Property Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                <!-- Property Card 1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
-                    <div class="relative">
-                        <span class="absolute top-3 left-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">Active</span>
-                        <img src="/api/placeholder/400/300" alt="Luxury Apartment in Marrakech" class="w-full h-48 object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
-                                <h3 class="text-xl font-semibold text-gray-900">Luxury Apartment with Pool</h3>
-                                <p class="text-gray-600">Marrakech, Morocco</p>
-                            </div>
-                            <span class="text-sm font-medium px-2 py-1 bg-gray-100 rounded text-gray-600">ID: #54372</span>
+                @foreach ($properties as $property)
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
+                        <div class="relative">
+                            <span class="absolute top-3 left-3 {{ $property->isActive() ? 'bg-green-500' : 'bg-red-500' }} text-white text-xs font-bold px-3 py-1 rounded-full z-10">{{ $property->isActive() ? "Active" : "Inactive" }}</span>
+                            <img src="{{ $property->getImage() }}" alt="Luxury Apartment in Marrakech" class="w-full h-48 object-cover">
                         </div>
-                        
-                        <div class="flex items-center mt-4 mb-4">
-                            <div class="flex items-center mr-4">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                                </svg>
-                                <span class="text-gray-600">Sleeps 6</span>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900">{{ $property->type->getName() }}</h3>
+                                    <p class="text-gray-600">{{ $property->city->getName()}}</p>
+                                </div>
                             </div>
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
-                                </svg>
-                                <span class="text-gray-600">3 BDR</span>
+                            
+                            <div class="flex items-center mt-4 mb-4">
+                                <div class="flex items-center mr-4">
+                                    <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                                    </svg>
+                                    <span class="text-gray-600">Sleeps {{ $property->getBedrooms() }}</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                                    </svg>
+                                    <span class="text-gray-600">{{ $property->getBathrooms() }} BDR</span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-lg font-bold text-gray-900">$150 <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="ml-1 text-gray-600">4.8 (24 reviews)</span>
+                            
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-lg font-bold text-gray-900">{{ $property->getPrice() }} DH <span class="text-sm font-normal text-gray-600">/ night</span></span>
+                                <div class="flex items-center">
+                                    <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <span class="ml-1 text-gray-600">4.8 (24 reviews)</span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="border-t border-gray-200 pt-4">
-                            <div class="flex gap-2">
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Edit</a>
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Preview</a>
-                                <a href="#" class="flex-1 bg-[#FF5A5F] text-white hover:bg-[#E94E53] py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Manage</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Property Card 2 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
-                    <div class="relative">
-                        <span class="absolute top-3 left-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">Active</span>
-                        <img src="/api/placeholder/400/300" alt="Beachfront Villa in Barcelona" class="w-full h-48 object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
-                                <h3 class="text-xl font-semibold text-gray-900">Beachfront Villa</h3>
-                                <p class="text-gray-600">Barcelona, Spain</p>
-                            </div>
-                            <span class="text-sm font-medium px-2 py-1 bg-gray-100 rounded text-gray-600">ID: #54380</span>
-                        </div>
-                        
-                        <div class="flex items-center mt-4 mb-4">
-                            <div class="flex items-center mr-4">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                                </svg>
-                                <span class="text-gray-600">Sleeps 8</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
-                                </svg>
-                                <span class="text-gray-600">4 BDR</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-lg font-bold text-gray-900">$280 <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="ml-1 text-gray-600">4.9 (32 reviews)</span>
-                            </div>
-                        </div>
-                        
-                        <div class="border-t border-gray-200 pt-4">
-                            <div class="flex gap-2">
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Edit</a>
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Preview</a>
-                                <a href="#" class="flex-1 bg-[#FF5A5F] text-white hover:bg-[#E94E53] py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Manage</a>
+                            
+                            <div class="border-t border-gray-200 pt-4">
+                                <div class="flex gap-2">
+                                    <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Preview</a>
+                                    <a href="{{ route('properties.edit', $property->getPrimaryKey()) }}" class="flex-1 bg-[#FF5A5F] text-white hover:bg-[#E94E53] py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Edit</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Property Card 3 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
-                    <div class="relative">
-                        <span class="absolute top-3 left-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">Active</span>
-                        <img src="/api/placeholder/400/300" alt="Modern Apartment in Lisbon" class="w-full h-48 object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
-                                <h3 class="text-xl font-semibold text-gray-900">Modern City Apartment</h3>
-                                <p class="text-gray-600">Lisbon, Portugal</p>
-                            </div>
-                            <span class="text-sm font-medium px-2 py-1 bg-gray-100 rounded text-gray-600">ID: #54395</span>
-                        </div>
-                        
-                        <div class="flex items-center mt-4 mb-4">
-                            <div class="flex items-center mr-4">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                                </svg>
-                                <span class="text-gray-600">Sleeps 4</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
-                                </svg>
-                                <span class="text-gray-600">2 BDR</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-lg font-bold text-gray-900">$120 <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="ml-1 text-gray-600">4.7 (18 reviews)</span>
-                            </div>
-                        </div>
-                        
-                        <div class="border-t border-gray-200 pt-4">
-                            <div class="flex gap-2">
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Edit</a>
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Preview</a>
-                                <a href="#" class="flex-1 bg-[#FF5A5F] text-white hover:bg-[#E94E53] py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Manage</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Property Card 4 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
-                    <div class="relative">
-                        <span class="absolute top-3 left-3 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">Pending Review</span>
-                        <img src="/api/placeholder/400/300" alt="Mountain View Chalet" class="w-full h-48 object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
-                                <h3 class="text-xl font-semibold text-gray-900">Mountain View Chalet</h3>
-                                <p class="text-gray-600">Sierra Nevada, Spain</p>
-                            </div>
-                            <span class="text-sm font-medium px-2 py-1 bg-gray-100 rounded text-gray-600">ID: #54412</span>
-                        </div>
-                        
-                        <div class="flex items-center mt-4 mb-4">
-                            <div class="flex items-center mr-4">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                                </svg>
-                                <span class="text-gray-600">Sleeps 6</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
-                                </svg>
-                                <span class="text-gray-600">3 BDR</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-lg font-bold text-gray-900">$195 <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                            <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Awaiting Approval</span>
-                        </div>
-                        
-                        <div class="border-t border-gray-200 pt-4">
-                            <div class="flex gap-2">
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Edit</a>
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Preview</a>
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-400 py-2 rounded text-sm font-medium text-center cursor-not-allowed">Manage</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Property Card 5 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
-                    <div class="relative">
-                        <span class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">Inactive</span>
-                        <img src="/api/placeholder/400/300" alt="Seaside Cottage" class="w-full h-48 object-cover opacity-75">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
-                                <h3 class="text-xl font-semibold text-gray-900">Seaside Cottage</h3>
-                                <p class="text-gray-600">Algarve, Portugal</p>
-                            </div>
-                            <span class="text-sm font-medium px-2 py-1 bg-gray-100 rounded text-gray-600">ID: #54290</span>
-                        </div>
-                        
-                        <div class="flex items-center mt-4 mb-4">
-                            <div class="flex items-center mr-4">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                                </svg>
-                                <span class="text-gray-600">Sleeps 4</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-gray-500 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
-                                </svg>
-                                <span class="text-gray-600">2 BDR</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-lg font-bold text-gray-900">$135 <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">Unavailable</span>
-                        </div>
-                        
-                        <div class="border-t border-gray-200 pt-4">
-                            <div class="flex gap-2">
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Edit</a>
-                                <a href="#" class="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Preview</a>
-                                <a href="#" class="flex-1 bg-[#FF5A5F] text-white hover:bg-[#E94E53] py-2 rounded text-sm font-medium text-center transition duration-300 ease-in-out">Reactivate</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -527,7 +312,7 @@
                         </div>
                     </div>
                     <div class="hidden md:block">
-                        <img src="/api/placeholder/500/300" alt="Host Support" class="rounded-lg w-full h-auto">
+                        <img src="https://placehold.co/500x300" alt="Host Support" class="rounded-lg w-full h-auto">
                     </div>
                 </div>
             </div>
