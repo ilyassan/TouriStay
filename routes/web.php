@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OwnerPropertyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Route;
@@ -20,13 +22,9 @@ Route::get('/favorites', function () {
     return view('favorites.index');
 })->name("favorites.index");
 
-Route::get('/my-properties', function () {
-    return view('my-properties.index');
-})->name("my-properties.index");
+Route::get('/my-properties', OwnerPropertyController::class)->name("my-properties.index")->middleware("auth");
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name("dashboard");
+Route::get('/dashboard', DashboardController::class)->name("dashboard")->middleware("auth");
 
 Route::get('/admin/properties', function () {
     return view('properties.admin');

@@ -31,6 +31,16 @@ class User extends Authenticatable
     ];
 
 
+    public function getFullName()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
     public function isAdmin()
     {
         return $this->role_id == RoleEnum::ADMIN;
@@ -54,11 +64,16 @@ class User extends Authenticatable
         $query->where('role_id', RoleEnum::TOURIST);
     }
 
+    public function scopeProprietors(Builder $query): void
+    {
+        $query->where('role_id', RoleEnum::PROPRIETOR);
+    }
+
 
     // Relationships
-    public function favorites()
+    public function properties()
     {
-
+        return $this->hasMany(Property::class);
     }
 
 
