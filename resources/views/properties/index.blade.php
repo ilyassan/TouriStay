@@ -59,7 +59,11 @@
                             <p class="text-gray-600 mb-4">{{ Str::limit($property->getDescription(), 50) }}</p>
                             <div class="flex items-center justify-between">
                                 <span class="text-lg font-bold text-gray-900"> {{ $property->getPrice() }} DH <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                                <button class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-lg font-medium transition duration-300 ease-in-out">Book Now</button>
+                                @if (auth()->id() == $property->getOwnerId())
+                                    <a href="{{ route('properties.edit', $property->getPrimaryKey()) }}" class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-lg font-medium transition duration-300 ease-in-out">View</a>
+                                @else
+                                    <button class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-lg font-medium transition duration-300 ease-in-out">Book Now</button>
+                                @endif
                             </div>
                         </div>
                     </div>

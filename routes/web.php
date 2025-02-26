@@ -12,9 +12,8 @@ Route::get('/properties', [PropertyController::class, 'index'])->name("propertie
 Route::get('/properties/create', [PropertyController::class, 'create'])->name("properties.create")->middleware("auth");
 Route::post('/properties/store', [PropertyController::class, 'store'])->name("properties.store")->middleware("auth");
 
-Route::get('/properties/edit', function () {
-    return view('properties.edit');
-})->name("properties.edit");
+Route::get('/properties/edit/{property}', [PropertyController::class, 'edit'])->name("properties.edit")->middleware("auth");
+Route::put('/properties/update/{property}', [PropertyController::class, 'update'])->name("properties.update")->middleware("auth");
 
 Route::get('/favorites', function () {
     return view('favorites.index');
