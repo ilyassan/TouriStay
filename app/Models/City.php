@@ -6,15 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Location extends Model
+class City extends Model
 {
     use HasFactory;
 
-    protected $table = "locations";
+    protected $table = "cities";
 
     protected $fillable = [
         "name"
     ];
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
 
     public function properties(): HasMany
     {

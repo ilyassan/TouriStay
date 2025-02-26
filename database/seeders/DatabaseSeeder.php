@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             ProprietorSeeder::class,
             ToursitSeeder::class,
-            LocationSeeder::class,
+            CitySeeder::class,
             PropertySeeder::class,
             FavoriteSeeder::class,
         ]);

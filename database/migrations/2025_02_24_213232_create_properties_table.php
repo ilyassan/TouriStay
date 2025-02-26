@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer("bedrooms");
             $table->integer("bathrooms");
             $table->string("image")->nullable();
-            $table->foreignId("location_id")->constrained("locations")->cascadeOnDelete();
+            $table->foreignId("city_id")->constrained("cities")->cascadeOnDelete();
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
             $table->date("available_from");
             $table->date("available_to");
