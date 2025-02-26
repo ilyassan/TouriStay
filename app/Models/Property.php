@@ -20,9 +20,11 @@ class Property extends Model
         "image",
         "bedrooms",
         "bathrooms",
+        "address",
         "available_from",
         "available_to",
-        "city_id"
+        "city_id",
+        "type_id",
     ];
 
     public function getTitle()

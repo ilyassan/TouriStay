@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             AdminSeeder::class,
             ProprietorSeeder::class,
+            TypeSeeder::class,
             ToursitSeeder::class,
             CitySeeder::class,
             PropertySeeder::class,

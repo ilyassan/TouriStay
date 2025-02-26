@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Property;
+use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyController extends Controller
 {
@@ -23,5 +26,39 @@ class PropertyController extends Controller
                                 ->appends(request()->query());
         
         return view("properties.index", compact('properties'));
+    }
+
+    public function create()
+    {
+        $types = Type::all();
+        $cities = City::all();
+
+        return view('properties.create', compact("types", "cities"));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            "title" => "required|string|max:255",
+            "type_id" => "required|exists:types,id",
+            "bedrooms" => "required|numeric",
+            "bathrooms" => "required|numeric",
+            "city_id" => "required|exists:cities,id",
+            "address" => "required|string|max:255",
+            "description" => "required|string",
+            "image" => "required|image|mimes:jpeg,png,jpg,gif|max:2048",
+            "price" => "required|numeric",
+            "available_from" => "required|date",
+            "available_to" => "required|date|after_or_equal:available_from",
+        ]);
+
+        // Store the image
+        $data["image"] = $request->file('image')->store('images', 'public');
+        $data["user_id"] = Auth::id();
+        
+        // Create the experience
+        Property::create($data);
+        
+        return back()->with("success", "Your property has been published successfully.");
     }
 }

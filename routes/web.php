@@ -9,9 +9,8 @@ Route::get('/', HomeController::class)->name("home");
 
 Route::get('/properties', [PropertyController::class, 'index'])->name("properties.index");
 
-Route::get('/properties/create', function () {
-    return view('properties.create');
-})->name("properties.create");
+Route::get('/properties/create', [PropertyController::class, 'create'])->name("properties.create")->middleware("auth");
+Route::post('/properties/store', [PropertyController::class, 'store'])->name("properties.store")->middleware("auth");
 
 Route::get('/properties/edit', function () {
     return view('properties.edit');
