@@ -22,11 +22,58 @@ class Property extends Model
         "bathrooms",
         "available_from",
         "available_to",
-        "location_id"
+        "city_id"
     ];
 
-    public function location(): BelongsTo
+    public function getTitle()
     {
-        return $this->belongsTo(Location::class);
+        return $this->title;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getImage()
+    {
+        return $this->image ?? "https://placehold.co/600x400";
+    }
+
+    public function getBedrooms()
+    {
+        return $this->bedrooms;
+    }
+
+    public function getBathrooms()
+    {
+        return $this->bathrooms;
+    }
+
+    public function getAvailableFromDate()
+    {
+        return $this->available_from;
+    }
+
+    public function getAvailableToDate()
+    {
+        return $this->available_to;
+    }
+
+    
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\Location;
 use App\Models\Property;
 use App\Models\User;
@@ -12,11 +13,11 @@ class PropertySeeder extends Seeder
     public function run(): void
     {
         $users = User::pluck('id')->toArray();
-        $locations = Location::pluck('id')->toArray();
+        $cities = City::pluck('id')->toArray();
 
-        Property::factory(50)->make()->each(function ($property) use ($users, $locations) {
+        Property::factory(50)->make()->each(function ($property) use ($users, $cities) {
             $property->user_id = $users[array_rand($users)];
-            $property->location_id = $locations[array_rand($locations)];
+            $property->city_id = $cities[array_rand($cities)];
             $property->save();
         });
     }

@@ -24,7 +24,7 @@ class PropertyFactory extends Factory
             "bathrooms" => fake()->numberBetween(1, 3),
             "available_from" => $availableFrom,
             "available_to" => $availableTo,
-            "location_id" => null, // Set in seeder
+            "city_id" => null, // Set in seeder
         ];
     }
 }

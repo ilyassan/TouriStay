@@ -13,8 +13,8 @@
                         <button class="bg-white text-gray-900 border-2 border-gray-200 hover:border-gray-300 px-6 py-3 rounded-lg text-lg font-semibold transition duration-150 ease-in-out">List Your Property</button>
                     </div>
                 </div>
-                <div class="md:w-1/2">
-                    <img src="/api/placeholder/600/400" alt="World Cup 2030 Host Cities" class="rounded-xl shadow-lg">
+                <div class="md:w-2/5">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/81/2030_FIFA_World_Cup_Logo.svg/1200px-2030_FIFA_World_Cup_Logo.svg.png" alt="World Cup 2030 Host Cities">
                 </div>
             </div>
         </div>
@@ -62,21 +62,21 @@
                     <div class="text-[#FF5A5F] mb-4">
                         <i class="fas fa-users text-3xl"></i>
                     </div>
-                    <h3 class="text-4xl font-bold text-gray-900">15,000+</h3>
+                    <h3 class="text-4xl font-bold text-gray-900">{{ $usersCount }}+</h3>
                     <p class="text-gray-600 mt-2">Active Users</p>
                 </div>
                 <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition duration-300">
                     <div class="text-[#FF5A5F] mb-4">
                         <i class="fas fa-home text-3xl"></i>
                     </div>
-                    <h3 class="text-4xl font-bold text-gray-900">8,500+</h3>
+                    <h3 class="text-4xl font-bold text-gray-900">{{ $propertiesCount }}+</h3>
                     <p class="text-gray-600 mt-2">Properties Listed</p>
                 </div>
                 <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition duration-300">
                     <div class="text-[#FF5A5F] mb-4">
                         <i class="fas fa-city text-3xl"></i>
                     </div>
-                    <h3 class="text-4xl font-bold text-gray-900">30+</h3>
+                    <h3 class="text-4xl font-bold text-gray-900">{{ $citiesCount }}+</h3>
                     <p class="text-gray-600 mt-2">Cities Covered</p>
                 </div>
                 <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition duration-300">
@@ -98,80 +98,30 @@
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">Discover our best accommodations in World Cup 2030 host cities</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Property Card 1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="relative">
-                        <img src="/api/placeholder/400/300" alt="Luxury Apartment in Marrakech" class="w-full h-56 object-cover">
-                        <span class="absolute top-4 right-4 bg-[#FF5A5F] text-white text-xs font-semibold px-2 py-1 rounded">Featured</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-sm font-semibold text-[#FF5A5F]">Marrakech, Morocco</span>
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="ml-1 text-sm font-medium text-gray-700">4.9</span>
+                @foreach ($properties as $property)
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                        <div class="relative">
+                            <img src="{{ $property->getImage() }}" alt="{{ $property->getTitle() }}" class="w-full h-56 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-sm font-semibold text-[#FF5A5F]">{{ $property->city->getName() }}</span>
+                                <div class="flex items-center">
+                                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <span class="ml-1 text-sm font-medium text-gray-700">4.9</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $property->getTitle() }}</h3>
+                            <p class="text-gray-600 mb-4">{{ Str::limit($property->getDescription(), 100) }}</p>
+                            <div class="flex items-center justify-between mt-6">
+                                <span class="text-lg font-bold text-gray-900">{{ $property->getPrice() }} DH <span class="text-sm font-normal text-gray-600">/ night</span></span>
+                                <a href="#" class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-md font-medium transition duration-150 ease-in-out">View Details</a>
                             </div>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Luxury Apartment with Pool</h3>
-                        <p class="text-gray-600 mb-4">Spacious 3-bedroom apartment with private pool, perfect for your World Cup stay. Close to stadium and tourist attractions.</p>
-                        <div class="flex items-center justify-between mt-6">
-                            <span class="text-lg font-bold text-gray-900">$150 <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                            <a href="#" class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-md font-medium transition duration-150 ease-in-out">View Details</a>
-                        </div>
                     </div>
-                </div>
-                
-                <!-- Property Card 2 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="relative">
-                        <img src="/api/placeholder/400/300" alt="Villa in Madrid" class="w-full h-56 object-cover">
-                        <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">New</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-sm font-semibold text-[#FF5A5F]">Madrid, Spain</span>
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="ml-1 text-sm font-medium text-gray-700">4.8</span>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Modern Villa in City Center</h3>
-                        <p class="text-gray-600 mb-4">Beautiful 4-bedroom villa with garden, just 15 minutes from the stadium. Perfect for groups and families attending the World Cup.</p>
-                        <div class="flex items-center justify-between mt-6">
-                            <span class="text-lg font-bold text-gray-900">$280 <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                            <a href="#" class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-md font-medium transition duration-150 ease-in-out">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Property Card 3 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="relative">
-                        <img src="/api/placeholder/400/300" alt="Apartment in Lisbon" class="w-full h-56 object-cover">
-                        <span class="absolute top-4 right-4 bg-orange-600 text-white text-xs font-semibold px-2 py-1 rounded">Popular</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-sm font-semibold text-[#FF5A5F]">Lisbon, Portugal</span>
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span class="ml-1 text-sm font-medium text-gray-700">4.7</span>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Cozy Apartment with Stadium View</h3>
-                        <p class="text-gray-600 mb-4">Stylish 2-bedroom apartment with a view of the stadium. Renovated in 2029, equipped with all modern amenities for your comfort.</p>
-                        <div class="flex items-center justify-between mt-6">
-                            <span class="text-lg font-bold text-gray-900">$195 <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                            <a href="#" class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-md font-medium transition duration-150 ease-in-out">View Details</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             
             <div class="text-center mt-10">
@@ -190,7 +140,7 @@
         <div class="container mx-auto px-4 md:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center gap-10">
                 <div class="md:w-1/2">
-                    <img src="/api/placeholder/500/400" alt="Host your property" class="rounded-xl shadow-lg">
+                    <img src="https://placehold.co/500x400" alt="Host your property" class="rounded-xl shadow-lg">
                 </div>
                 <div class="md:w-1/2">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Become a host for World Cup 2030</h2>
@@ -253,7 +203,7 @@
                     </div>
                     <p class="text-gray-700 mb-4">"Finding accommodation for the World Cup was so easy with TouriStay. The platform is user-friendly and the property I booked was exactly as described. Great experience!"</p>
                     <div class="flex items-center">
-                        <img src="/api/placeholder/40/40" alt="User" class="w-10 h-10 rounded-full">
+                        <img src="https://placehold.co/40x40" alt="User" class="w-10 h-10 rounded-full">
                         <div class="ml-3">
                             <h4 class="text-sm font-semibold text-gray-900">Michael Johnson</h4>
                             <p class="text-xs text-gray-600">Brazil</p>
@@ -284,7 +234,7 @@
                     </div>
                     <p class="text-gray-700 mb-4">"As a property owner, listing my apartment on TouriStay has been incredibly profitable. The platform is easy to use and the customer service team is always available to help."</p>
                     <div class="flex items-center">
-                        <img src="/api/placeholder/40/40" alt="User" class="w-10 h-10 rounded-full">
+                        <img src="https://placehold.co/40x40" alt="User" class="w-10 h-10 rounded-full">
                         <div class="ml-3">
                             <h4 class="text-sm font-semibold text-gray-900">Sofia Martinez</h4>
                             <p class="text-xs text-gray-600">Spain</p>
@@ -315,7 +265,7 @@
                     </div>
                     <p class="text-gray-700 mb-4">"The search filters made it so easy to find exactly what I needed for my family during our World Cup trip. We found a perfect place in Casablanca with all the amenities we wanted."</p>
                     <div class="flex items-center">
-                        <img src="/api/placeholder/40/40" alt="User" class="w-10 h-10 rounded-full">
+                        <img src="https://placehold.co/40x40" alt="User" class="w-10 h-10 rounded-full">
                         <div class="ml-3">
                             <h4 class="text-sm font-semibold text-gray-900">James Wilson</h4>
                             <p class="text-xs text-gray-600">United Kingdom</p>
@@ -338,7 +288,7 @@
                 <!-- City Card: Marrakech -->
                 <a href="#" class="group">
                     <div class="relative rounded-xl overflow-hidden h-40 md:h-60">
-                        <img src="/api/placeholder/300/240" alt="Marrakech" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
+                        <img src="https://placehold.co/300x240" alt="Marrakech" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-semibold text-lg md:text-xl">Marrakech</h3>
@@ -350,7 +300,7 @@
                 <!-- City Card: Casablanca -->
                 <a href="#" class="group">
                     <div class="relative rounded-xl overflow-hidden h-40 md:h-60">
-                        <img src="/api/placeholder/300/240" alt="Casablanca" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
+                        <img src="https://placehold.co/300x240" alt="Casablanca" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-semibold text-lg md:text-xl">Casablanca</h3>
@@ -362,7 +312,7 @@
                 <!-- City Card: Madrid -->
                 <a href="#" class="group">
                     <div class="relative rounded-xl overflow-hidden h-40 md:h-60">
-                        <img src="/api/placeholder/300/240" alt="Madrid" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
+                        <img src="https://placehold.co/300x240" alt="Madrid" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-semibold text-lg md:text-xl">Madrid</h3>
@@ -374,7 +324,7 @@
                 <!-- City Card: Barcelona -->
                 <a href="#" class="group">
                     <div class="relative rounded-xl overflow-hidden h-40 md:h-60">
-                        <img src="/api/placeholder/300/240" alt="Barcelona" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
+                        <img src="https://placehold.co/300x240" alt="Barcelona" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-semibold text-lg md:text-xl">Barcelona</h3>
@@ -386,7 +336,7 @@
                 <!-- City Card: Lisbon -->
                 <a href="#" class="group">
                     <div class="relative rounded-xl overflow-hidden h-40 md:h-60">
-                        <img src="/api/placeholder/300/240" alt="Lisbon" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
+                        <img src="https://placehold.co/300x240" alt="Lisbon" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-semibold text-lg md:text-xl">Lisbon</h3>
@@ -398,7 +348,7 @@
                 <!-- City Card: Porto -->
                 <a href="#" class="group">
                     <div class="relative rounded-xl overflow-hidden h-40 md:h-60">
-                        <img src="/api/placeholder/300/240" alt="Porto" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
+                        <img src="https://placehold.co/300x240" alt="Porto" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-semibold text-lg md:text-xl">Porto</h3>
@@ -410,7 +360,7 @@
                 <!-- City Card: Rabat -->
                 <a href="#" class="group">
                     <div class="relative rounded-xl overflow-hidden h-40 md:h-60">
-                        <img src="/api/placeholder/300/240" alt="Rabat" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
+                        <img src="https://placehold.co/300x240" alt="Rabat" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-semibold text-lg md:text-xl">Rabat</h3>
@@ -422,7 +372,7 @@
                 <!-- City Card: Valencia -->
                 <a href="#" class="group">
                     <div class="relative rounded-xl overflow-hidden h-40 md:h-60">
-                        <img src="/api/placeholder/300/240" alt="Valencia" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
+                        <img src="https://placehold.co/300x240" alt="Valencia" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-semibold text-lg md:text-xl">Valencia</h3>
