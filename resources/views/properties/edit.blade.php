@@ -9,38 +9,23 @@
     <section class="py-12 bg-white">
         <div class="container mx-auto px-4 md:px-6 lg:px-8">
             <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-                <!-- Progress Steps -->
-                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <div class="flex flex-col items-center">
-                            <div class="bg-[#FF5A5F] text-white h-8 w-8 rounded-full flex items-center justify-center">
-                                <span class="text-sm font-bold">1</span>
-                            </div>
-                            <span class="text-xs mt-1 font-medium text-[#FF5A5F]">Property Details</span>
-                        </div>
-                        <div class="flex-1 h-1 mx-2 bg-gray-300">
-                            <div class="h-full bg-[#FF5A5F] w-0"></div>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="bg-gray-300 text-gray-600 h-8 w-8 rounded-full flex items-center justify-center">
-                                <span class="text-sm font-bold">2</span>
-                            </div>
-                            <span class="text-xs mt-1 font-medium text-gray-500">Photos & Amenities</span>
-                        </div>
-                        <div class="flex-1 h-1 mx-2 bg-gray-300">
-                            <div class="h-full bg-[#FF5A5F] w-0"></div>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="bg-gray-300 text-gray-600 h-8 w-8 rounded-full flex items-center justify-center">
-                                <span class="text-sm font-bold">3</span>
-                            </div>
-                            <span class="text-xs mt-1 font-medium text-gray-500">Pricing & Availability</span>
-                        </div>
-                    </div>
+                <!-- Header with Delete Button -->
+                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-gray-800">Edit Property</h2>
+                    <form id="deletePropertyForm" method="POST" action="{{ route('properties.destroy', $property->getPrimaryKey()) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" id="deletePropertyBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300 ease-in-out inline-flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                            Delete Property
+                        </button>
+                    </form>
                 </div>
-
+                
                 <!-- Form Content -->
-                <div class="p-6 md:p-8">
+                <div class="p-6 md:p-8 flex-1">
                     <form method="POST" action="{{ route('properties.update', $property->getPrimaryKey()) }}" enctype="multipart/form-data" class="space-y-8">
                         @csrf
                         @method("PUT")
@@ -202,11 +187,12 @@
                                 Back
                             </button>
                             <button type="submit" class="bg-[#FF5A5F] text-white hover:bg-[#E94E53] px-6 py-3 rounded-lg text-sm font-semibold transition duration-300 ease-in-out inline-block" id="goToStep2">
-                                Publish Property
+                                Update Property
                             </button>
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </section>
@@ -215,9 +201,37 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+    <!-- Include SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- JavaScript for interactive features -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Delete property confirmation with SweetAlert2
+            const deleteBtn = document.getElementById('deletePropertyBtn');
+            const deleteForm = document.getElementById('deletePropertyForm');
+            
+            deleteBtn.addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Are you sure you want to delete this property? This action cannot be undone.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#FF5A5F',
+                    cancelButtonColor: '#718096',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        deleteForm.submit();
+                    }
+                });
+            });
+            // Set initial character count
+            const descriptionField = document.getElementById('description');
+            const charCount = document.getElementById('charCount');
+            charCount.textContent = `${descriptionField.value.length}/2000`;
+            
             // Single image upload and preview
             const imageUpload = document.getElementById('imageUpload');
             const previewContainer = document.getElementById('previewContainer');
@@ -225,6 +239,12 @@
             const photoPreview = document.getElementById('photoPreview');
             const removePhotoBtn = document.getElementById('removePhoto');
             const removeImageInput = document.getElementById('removeImage');
+            
+            // Show upload prompt if no image is present
+            if (!photoPreview.src || photoPreview.src === window.location.href) {
+                previewContainer.classList.add('hidden');
+                uploadPrompt.classList.remove('hidden');
+            }
             
             imageUpload.addEventListener('change', function() {
                 if (this.files && this.files.length > 0) {
@@ -295,9 +315,6 @@
             }
             
             // Character counter for description
-            const descriptionField = document.getElementById('description');
-            const charCount = document.getElementById('charCount');
-            
             descriptionField.addEventListener('input', function() {
                 const count = this.value.length;
                 charCount.textContent = `${count}/2000`;

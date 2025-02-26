@@ -9,39 +9,14 @@
     <section class="py-12 bg-white">
         <div class="container mx-auto px-4 md:px-6 lg:px-8">
             <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-                <!-- Progress Steps -->
-                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <div class="flex flex-col items-center">
-                            <div class="bg-[#FF5A5F] text-white h-8 w-8 rounded-full flex items-center justify-center">
-                                <span class="text-sm font-bold">1</span>
-                            </div>
-                            <span class="text-xs mt-1 font-medium text-[#FF5A5F]">Property Details</span>
-                        </div>
-                        <div class="flex-1 h-1 mx-2 bg-gray-300">
-                            <div class="h-full bg-[#FF5A5F] w-0"></div>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="bg-gray-300 text-gray-600 h-8 w-8 rounded-full flex items-center justify-center">
-                                <span class="text-sm font-bold">2</span>
-                            </div>
-                            <span class="text-xs mt-1 font-medium text-gray-500">Photos & Amenities</span>
-                        </div>
-                        <div class="flex-1 h-1 mx-2 bg-gray-300">
-                            <div class="h-full bg-[#FF5A5F] w-0"></div>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="bg-gray-300 text-gray-600 h-8 w-8 rounded-full flex items-center justify-center">
-                                <span class="text-sm font-bold">3</span>
-                            </div>
-                            <span class="text-xs mt-1 font-medium text-gray-500">Pricing & Availability</span>
-                        </div>
-                    </div>
+                <!-- Header with Delete Button -->
+                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-gray-800">Add Property</h2>
                 </div>
 
                 <!-- Form Content -->
                 <div class="p-6 md:p-8">
-                    <form method="POST" action="{{ route('properties.store') }}" enctype="multipart/form-data" class="space-y-8">
+                    <form method="POST" action="{{ route('properties.store') }}" enctype="multipart/form-data" class="flex flex-col gap-8">
                         @csrf
                         @method("POST")
                         <!-- Property Title -->

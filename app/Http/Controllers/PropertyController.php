@@ -87,4 +87,20 @@ class PropertyController extends Controller
         
         return back()->with("success", "Your property has been updated successfully.");
     }
+
+    public function destroy(Property $property)
+    {
+        if (Auth::id() != $property->getOwnerId()) {
+            return redirect()->route("home");
+        }
+
+        // Delete the image
+        if ($property->getImageName()) {
+            unlink(storage_path("app/public/" . $property->getImageName()));
+        }
+
+        $property->delete();
+
+        return redirect()->route("my-properties.index")->with("success", "Your property has been deleted successfully.");
+    }
 }

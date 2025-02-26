@@ -40,7 +40,7 @@
                                 @endif
                                 @if (auth()->user()->isProprietor())
                                     <a href="{{ route('my-properties.index') }}"
-                                        class="{{ Request::routeIs('my-properties.index', 'properties.create') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                                        class="{{ Request::routeIs('my-properties.index', 'properties.create', 'properties.edit') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
                                         My Properties
                                     </a>
                                 @endif
