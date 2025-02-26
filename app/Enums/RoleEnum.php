@@ -2,9 +2,9 @@
 
 namespace App\Enums;
 
-enum RoleEnum: int
+class RoleEnum
 {
-    case ADMIN = 1;
-    case PROPRIETOR  = 2;
-    case TOURIST = 3;
+    const ADMIN = 1;
+    const PROPRIETOR  = 2;
+    const TOURIST = 3;
 }

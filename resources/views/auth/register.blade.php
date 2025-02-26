@@ -21,7 +21,7 @@
                     <!-- Role Selection -->
                     <div class="flex justify-center space-x-4 mb-6">
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="role" value="tourist" class="peer sr-only" checked>
+                            <input type="radio" name="role" value="{{ $touristRole }}" class="peer sr-only">
                             <div class="w-40 px-4 py-3 bg-white border-2 border-gray-200 rounded-lg peer-checked:border-[#FF5A5F] peer-checked:bg-red-50 transition-all duration-200">
                                 <div class="flex items-center justify-center space-x-2">
                                     <svg class="h-6 w-6 text-gray-500 peer-checked:text-[#FF5A5F]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -32,7 +32,7 @@
                             </div>
                         </label>
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="role" value="proprietor" class="peer sr-only">
+                            <input type="radio" name="role" value="{{ $proprietorRole }}" class="peer sr-only">
                             <div class="w-40 px-4 py-3 bg-white border-2 border-gray-200 rounded-lg peer-checked:border-[#FF5A5F] peer-checked:bg-red-50 transition-all duration-200">
                                 <div class="flex items-center justify-center space-x-2">
                                     <svg class="h-6 w-6 text-gray-500 peer-checked:text-[#FF5A5F]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +104,7 @@
 
                     <!-- Terms Checkbox -->
                     <div class="flex items-center">
-                        <input id="terms" name="terms" type="checkbox" required
+                        <input id="terms" name="terms" type="checkbox"
                             class="h-4 w-4 text-[#FF5A5F] focus:ring-[#FF5A5F] border-gray-300 rounded">
                         <label for="terms" class="ml-2 block text-sm text-gray-900">
                             I agree to the

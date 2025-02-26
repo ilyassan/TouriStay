@@ -12,7 +12,7 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-50">
             <!-- Navbar -->
-            <nav class="bg-white shadow-sm fixed w-full z-10">
+            <nav class="bg-white shadow-sm fixed w-full z-50">
                 <div class="container mx-auto px-4 md:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
@@ -26,7 +26,25 @@
                                 Home
                             </a>
 
+                            <a href="{{ route('properties.index') }}"
+                               class="{{ Request::routeIs('properties.index') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                                Properties
+                            </a>
+
                             @auth
+                                @if (auth()->user()->isTourist())
+                                    <a href="{{ route('favorites.index') }}"
+                                        class="{{ Request::routeIs('favorites.index') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                                        Favorites
+                                    </a>    
+                                @endif
+                                @if (auth()->user()->isProprietor())
+                                    <a href="{{ route('my-properties.index') }}"
+                                        class="{{ Request::routeIs('my-properties.index', 'properties.create') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                                        My Properties
+                                    </a>
+                                @endif
+
                                 <form action="{{ route('logout') }}" method="POST" class="inline">
                                     @csrf
                                     <button type="submit"

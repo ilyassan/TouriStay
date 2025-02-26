@@ -11,7 +11,7 @@
                 <p class="text-lg mb-6 max-w-3xl mx-auto">
                     View, edit and track all your listed accommodations across Morocco, Spain, and Portugal.
                 </p>
-                <a href="#" class="bg-[#FF5A5F] text-white hover:bg-[#E94E53] px-6 py-3 rounded-full text-lg font-semibold transition duration-300 ease-in-out inline-block mr-4">
+                <a href="{{ route('properties.create') }}" class="bg-[#FF5A5F] text-white hover:bg-[#E94E53] px-6 py-3 rounded-full text-lg font-semibold transition duration-300 ease-in-out inline-block mr-4">
                     Add New Property
                 </a>
                 <a href="#" class="bg-white border-2 border-[#FF5A5F] text-[#FF5A5F] hover:bg-[#FF5A5F] hover:text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300 ease-in-out inline-block">
