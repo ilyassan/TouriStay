@@ -23,13 +23,45 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'image',
         'email',
         'role_id',
         'email_verified_at',
         'remember_token',
         'password',
+        'phone',
     ];
 
+
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    public function getImage()
+    {
+        return $this->image ? asset("storage/". $this->image) : "https://placehold.co/40x40";
+    }
+
+    public function getImageName()
+    {
+        return $this->image;
+    }
 
     public function getFullName()
     {
