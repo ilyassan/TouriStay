@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OwnerPropertyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name("home");
@@ -30,7 +31,7 @@ Route::get('/admin/properties', function () {
     return view('properties.admin');
 })->name("properties.admin");
 
-Route::middleware('guest')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
