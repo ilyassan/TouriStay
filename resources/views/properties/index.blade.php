@@ -47,7 +47,19 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($properties as $property)
-                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
+                    @php
+                        $isFavorite = count($property->favorites) > 0;
+                    @endphp
+                    <div class="bg-white relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
+                        <form method="POST" action="{{ route('favorites.store') }}" class="absolute top-4 right-4 z-10">
+                            @csrf
+                            <input type="hidden" name="property_id" value="{{ $property->getPrimaryKey() }}">
+                            <button class="p-2 rounded-full shadow-md <?= $isFavorite ? 'hover:bg-white text-white bg-[#FF5A5F] hover:text-gray-400' : 'bg-white hover:text-white hover:bg-[#FF5A5F] text-gray-400' ?> transition duration-300">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </form>
                         <img src="{{ $property->getImage() }}" alt="Luxury Apartment in Marrakech" class="w-full h-56 object-cover">
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-2">

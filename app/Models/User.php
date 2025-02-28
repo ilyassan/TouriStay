@@ -103,13 +103,19 @@ class User extends Authenticatable
 
 
     // Relationships
+    // public function favorites()
+    // {
+    //     return $this->hasMany(Favorite::class);
+    // }
+    public function favorites()
+    {
+        return $this->belongsToMany(Property::class, "favorites", "user_id", "property_id");
+    }
+
     public function properties()
     {
         return $this->hasMany(Property::class);
     }
-
-
-
 
 
 

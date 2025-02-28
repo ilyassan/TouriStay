@@ -21,17 +21,18 @@
                             </a>
                         </div>
                         <div class="hidden md:flex md:items-center md:space-x-6">
-                            <a href="{{ route('home') }}"
-                               class="{{ Request::routeIs('home') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                                Home
-                            </a>
-
-                            <a href="{{ route('properties.index') }}"
-                               class="{{ Request::routeIs('properties.index') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                                Properties
-                            </a>
-
                             @auth
+                                @if (! auth()->user()->isAdmin())
+                                    <a href="{{ route('home') }}"
+                                        class="{{ Request::routeIs('home') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                                        Home
+                                    </a>
+
+                                    <a href="{{ route('properties.index') }}"
+                                        class="{{ Request::routeIs('properties.index') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                                        Properties
+                                    </a>
+                                @endif
                                 @if (auth()->user()->isTourist())
                                     <a href="{{ route('favorites.index') }}"
                                         class="{{ Request::routeIs('favorites.index') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
@@ -52,6 +53,11 @@
                                         Logout
                                     </button>
                                 </form>
+
+                                <a href="{{ route('profile.edit') }}"
+                                    class="{{ Request::routeIs('profile.edit') ? 'text-[#FF5A5F]' : 'text-gray-700 hover:text-[#FF5A5F]' }} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                                    <img src="https://placehold.co/50x50" class="rounded-full" alt="">
+                                </a>
                             @else
                                 <a href="{{ route('login') }}"
                                    class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out shadow-sm">

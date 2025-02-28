@@ -38,7 +38,7 @@
                 <!-- Sidebar Links -->
                 <div class="px-4 space-y-1">
                     <!-- Dashboard -->
-                    <a href="" class="text-white bg-[#FF5A5F] flex items-center gap-3 px-4 py-2 rounded-lg">
+                    <a href="{{ route('dashboard') }}" class="{{ Request::routeIs('dashboard') ? 'text-white bg-[#FF5A5F]' :  'text-gray-600 hover:bg-gray-100'}} flex items-center gap-3 px-4 py-2 rounded-lg">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
@@ -46,7 +46,7 @@
                     <!-- Content Management -->
                     <div class="space-y-1 pt-2">
                         <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Properties Management</p>
-                        <a href="{{ route("properties.admin") }}" class="text-gray-600 hover:bg-gray-100 flex items-center gap-3 px-4 py-2 rounded-lg">
+                        <a href="{{ route("properties.admin") }}" class="{{ Request::routeIs('properties.admin') ? 'text-white bg-[#FF5A5F]' :  'text-gray-600 hover:bg-gray-100'}} flex items-center gap-3 px-4 py-2 rounded-lg">
                             <i class="fas fa-folder"></i>
                             <span>Properties</span>
                         </a>
@@ -56,7 +56,7 @@
                     <form action="{{ route('logout') }}" method="POST" class="space-y-1 pt-2">
                         @csrf
                         <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Account</p>
-                        <button class="flex w-full items-center gap-3 px-4 py-2 text-[#E94E53] hover:bg-[#FF5A5F] hover:text-white rounded-lg">
+                        <button class="flex w-full items-center gap-3 px-4 py-2 text-[#E94E53] hover:bg-gray-100 rounded-lg">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
                         </button>
