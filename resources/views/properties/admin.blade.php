@@ -30,22 +30,24 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 @foreach ($properties as $property)
                     <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
-                        <img src="{{ $property->getImage() }}" alt="{{ $property->name }}" class="w-full h-56 object-cover">
+                        <img src="{{ $property->getImage() }}" alt="{{ $property->getTitle() }}" class="w-full h-56 object-cover">
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-2">
                                 <div>
-                                    <h3 class="text-xl font-semibold text-gray-900">{{ $property->name }}</h3>
+                                    <h3 class="text-xl font-semibold text-gray-900">{{ $property->getTitle() }}</h3>
                                     <p class="text-gray-600">{{ $property->city->getName() }}</p>
                                 </div>
                             </div>
-                            <p class="text-gray-600 mb-4">{{ Str::limit($property->description, 100) }}</p>
+                            <p class="text-gray-600 mb-4">{{ Str::limit($property->getDescription(), 100) }}</p>
                             <div class="flex items-center justify-between">
-                                <span class="text-lg font-bold text-gray-900">${{ $property->price }} <span class="text-sm font-normal text-gray-600">/ night</span></span>
-                                @if(auth()->id() == $property->owner_id)
-                                    <a href="{{ route('properties.edit', $property->id) }}" class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-lg font-medium transition duration-300 ease-in-out">View</a>
-                                @else
-                                    <button class="bg-[#FF5A5F] hover:bg-[#E94E53] text-white px-4 py-2 rounded-lg font-medium transition duration-300 ease-in-out">Book Now</button>
-                                @endif
+                                <span class="text-lg font-bold text-gray-900">{{ $property->getPrice() }} DH<span class="text-sm font-normal text-gray-600">/ night</span></span>
+                                <div class="flex space-x-2">
+                                    <form action="{{ route('properties.destroy', $property->getPrimaryKey()) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition duration-300 ease-in-out">Delete</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
