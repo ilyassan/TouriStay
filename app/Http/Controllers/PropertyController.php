@@ -18,7 +18,11 @@ class PropertyController extends Controller
         $keyword = $request->has("keyword") ? "%" . $request->get("keyword") . "%" : "%";
         $itemsToShow = $request->get("items") ?? 3;
         
-        $properties = Property::with("city")
+        $properties = Property::with(["city", "favorites" => function($favorite){
+                                    return $favorite->whereHas('user', function ($user) {
+                                        $user->where('id', Auth::id());
+                                    })->get();
+                                }])
                                 ->where("title", "LIKE", $keyword)
                                 ->orWhere("description", "LIKE", $keyword)
                                 ->orWhere("price", "LIKE", $keyword)
@@ -26,8 +30,8 @@ class PropertyController extends Controller
                                 ->orWhere("bedrooms", "LIKE", $keyword)
                                 ->paginate($itemsToShow)
                                 ->appends(request()->query());
-        
-        return view("properties.index", compact('properties'));
+
+        return view(Auth::user()->isProprietor() ? "properties.index" : "properties.admin", compact('properties'));
     }
 
     public function create()

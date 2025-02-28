@@ -13,7 +13,7 @@
                         <button class="bg-white text-gray-900 border-2 border-gray-200 hover:border-gray-300 px-6 py-3 rounded-lg text-lg font-semibold transition duration-150 ease-in-out">List Your Property</button>
                     </div>
                 </div>
-                <div class="md:w-2/5">
+                <div class="md:w-96 md:h-96">
                     <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/81/2030_FIFA_World_Cup_Logo.svg/1200px-2030_FIFA_World_Cup_Logo.svg.png" alt="World Cup 2030 Host Cities">
                 </div>
             </div>

@@ -1,11 +1,10 @@
 <x-app-layout>
-    <x-slot:title> My Profile - World Cup 2030 </x-slot>
+    <x-slot:title> My Profile </x-slot>
 
     <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method("PATCH")
 
-        {{ var_dump($errors->first()) }}
         <!-- Profile Header Section -->
         <section class="relative py-16 bg-gradient-to-r from-[#FF5A5F] to-[#FF8A8F]">
             <div class="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
@@ -26,7 +25,7 @@
                     <div class="md:ml-8 text-center md:text-left">
                         <h1 class="text-3xl md:text-4xl font-bold text-white">
                             <span id="display-name">{{ $user->getFullName() }}</span>
-                            <span class="inline-block ml-3 px-3 py-1 bg-white text-[#FF5A5F] text-sm rounded-full font-medium uppercase" id="user-role">{{ $user->isTourist() ? "Tourist" : "Proprietor" }}</span>
+                            <span class="inline-block ml-3 px-3 py-1 bg-white text-[#FF5A5F] text-sm rounded-full font-medium uppercase" id="user-role">{{ $user->isTourist() ? "Tourist" : ($user->isAdmin() ? "Admin" : "Proprietor") }}</span>
                         </h1>
                         <p class="text-white text-lg opacity-90 mt-2" id="user-since">Member since {{ Carbon\Carbon::parse($user->getCreatedAt())->format('F Y') }}</p>
                     </div>
