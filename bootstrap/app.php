@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Proprietor;
+use App\Http\Middleware\ProprietorOrAdmin;
 use App\Http\Middleware\Tourist;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             "admin" => Admin::class,
             "tourist" => Tourist::class,
             "proprietor" => Proprietor::class,
+            "proprietor_or_admin" => ProprietorOrAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

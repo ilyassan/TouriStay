@@ -94,7 +94,7 @@ class PropertyController extends Controller
 
     public function destroy(Property $property)
     {
-        if (Auth::id() != $property->getOwnerId()) {
+        if ( Auth::user()->isProprietor() && Auth::id() != $property->getOwnerId()) {
             return redirect()->route("home");
         }
 
@@ -105,6 +105,6 @@ class PropertyController extends Controller
 
         $property->delete();
 
-        return redirect()->route("my-properties.index")->with("success", "Your property has been deleted successfully.");
+        return back()->with("success", "Your property has been deleted successfully.");
     }
 }

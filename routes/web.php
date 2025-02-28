@@ -35,13 +35,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [PropertyController::class, 'store'])->name("properties.store");
         Route::get('/edit/{property}', [PropertyController::class, 'edit'])->name("properties.edit");
         Route::put('/update/{property}', [PropertyController::class, 'update'])->name("properties.update");
-        Route::delete('/destroy/{property}', [PropertyController::class, 'destroy'])->name("properties.destroy");
     });
 
     // Owner-specific Routes
     Route::middleware('proprietor')->group(function () {
         Route::get('/my-properties', OwnerPropertyController::class)->name("my-properties.index");
     });
+
+    Route::middleware("proprietor_or_admin")->delete('/destroy/{property}', [PropertyController::class, 'destroy'])->name("properties.destroy");
 
     // Admin-specific Routes
     Route::middleware("admin")->group(function () {
